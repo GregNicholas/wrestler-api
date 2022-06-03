@@ -16,7 +16,7 @@ const wrestlers = {
     },
     'hulk hogan': {
         'birthDate': 'August 11, 1953',
-        'birthName': 'Terry Bollea',
+        'birthName': 'Terry Eugene Bollea',
         'nickName': 'Hollywood Hogan',
         'birthLocation': 'Agusta, Georgia',
         'championships': 12,
@@ -38,8 +38,21 @@ const wrestlers = {
         'championships': 6,
         'photo': 'https://www.wwe.com/f/styles/gallery_img_l/public/all/2018/07/001_WWE-Encyclopedia2489--cd563cbacaca3feda1a9d6e289ce0924.jpg'
     },
-    'not found': {
-        'message': 'wrestler not found'
+    'sting': {
+        'birthDate': 'March 20, 1959',
+        'birthName': 'Steve Borden',
+        'nickName': 'Sting',
+        'birthLocation': 'Omaha, Nebraska',
+        'championships': 13,
+        'photo': 'https://img.bleacherreport.net/img/images/photos/003/583/482/1a89da4594ad0af3959dd864ce81871a_crop_north.jpg?1458254312&w=3072&h=2048'
+    },
+    'unknown': {
+        'birthDate': '0',
+        'birthName': '',
+        'nickName': '',
+        'birthLocation': '',
+        'championships': 0,
+        'photo': ''
     }
 }
 
@@ -47,15 +60,28 @@ app.get('/', (request, response) => {
     response.sendFile(__dirname + '/index.html')
 })
 
-app.get('/api/:wrestlerName', (request, response) => {
-    const wrestlersName = request.params.wrestlerName.toLowerCase()
-    if(wrestlers[wrestlersName]){
-        response.json(wrestlers[wrestlersName])
+app.get('/api', (request, response) => {
+    response.json(wrestlers)
+})
+
+app.get('/api/:name', (request, response) => {
+    const wrestlerName = request.params.name.toLowerCase()
+    if(wrestlers[wrestlerName]){
+        response.json(wrestlers[wrestlerName])
     } else {
-        response.json(wrestlers['not found'])
+        response.json(wrestlers['unknown'])
     }
 })
 
+// app.get('/api/:wrestlerName', (request, response) => {
+//     const wrestlersName = request.params.wrestlerName.toLowerCase()
+//     if(wrestlers[wrestlersName]){
+//         response.json(wrestlers[wrestlersName])
+//     } else {
+//         response.json(wrestlers['not found'])
+//     }
+// })
+
 app.listen(process.env.PORT || PORT, () => {
-    console.log(`The server is running on port ${PORT}!`)
+    console.log(`The server is running on port ${PORT}! Go catch it!`)
 })
